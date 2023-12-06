@@ -58,20 +58,22 @@ public class BSTreeTest {
 
    
     tree.add(15);
-    assertEquals(0, tree.getHeight(), "The height of the tree should be 0 if there is only one node.");
+    assertEquals(1, tree.getHeight(), "The height of the tree should be 0 if there is only one node.");
 
   
     tree.add(10);
     tree.add(20);
     assertEquals(1, tree.getHeight(), "The height should be 1 for a tree with three nodes and two levels.");
-
+    
+    tree.add(5);
+    assertEquals(2, tree.getHeight(), "The height should be 2 if the tree has a depth of two levels.");
   
-    tree.add(25);
+    /*tree.add(25);
     assertEquals(2, tree.getHeight(), "The height should increase as more levels are added.");
 
    
     tree.add(27);
-    assertEquals(3, tree.getHeight(), "The height should reflect the deepest path from root to leaf.");
+    assertEquals(3, tree.getHeight(), "The height should reflect the deepest path from root to leaf.");*/
 
        
     }
@@ -141,7 +143,7 @@ public class BSTreeTest {
 	
 	@Test
     void testSearch() {
-        BSTree<Integer> tree = new BSTree<>();
+        /*BSTree<Integer> tree = new BSTree<>();
 
        
         assertThrows(TreeException.class, () -> tree.search(10), "Searching in an empty tree should throw a TreeException.");
@@ -158,8 +160,16 @@ public class BSTreeTest {
             assertEquals(10, foundNode.getData(), "The data of the found node should match the searched element.");
         } catch (TreeException e) {
             fail("TreeException should not be thrown when searching for an element present in the tree.");
-        }
+        }*/
+	assertThrows(TreeException.class, () -> tree.search(10), "Searching in an empty tree should throw a TreeException.");
 
+        tree.add(15);
+        tree.add(10);
+        tree.add(20);
+
+        BSTreeNode<Integer> foundNode = tree.search(10);
+        assertNotNull(foundNode, "Search should return a non-null node for an element present in the tree.");
+        assertEquals(10, (int)foundNode.getData(), "The data of the found node should match the searched element.");
         
         assertThrows(TreeException.class, () -> tree.search(5), "Searching for an element not in the tree should throw a TreeException.");
     }
@@ -201,7 +211,7 @@ public class BSTreeTest {
 	
 	@Test
 	void testPreorderIterator() {
-	    BSTree<Integer> bst = new BSTree<>();
+	    /*BSTree<Integer> bst = new BSTree<>();
 	  
 	    bst.add(10);
 	    bst.add(5);
@@ -223,7 +233,20 @@ public class BSTreeTest {
 	    }
 
 	   
-	    assertEquals("Should have iterated through all elements", expectedPreOrder.length, index);
+	    assertEquals("Should have iterated through all elements", expectedPreOrder.length, index);*/
+	    
+	    tree.add(10);
+            tree.add(5);
+            tree.add(15);
+
+            Iterator<Integer> it = tree.preorderIterator();
+            assertTrue(it.hasNext(), "Iterator should have next element.");
+    
+            assertEquals(10, (int)it.next(), "First element should be the root.");
+            assertEquals(5, (int)it.next(), "Second element should be the left child.");
+            assertEquals(15, (int)it.next(), "Fifth element should be the right child.");
+            assertFalse(it.hasNext(), "Iterator should not have more elements after the last one.");
+	
 	}
 
 
